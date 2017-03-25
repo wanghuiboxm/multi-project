@@ -5,41 +5,35 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>whb</groupId>
-    <artifactId>storm-learn</artifactId>
+    <artifactId>basic-learn</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    <packaging>pom</packaging>
-
-    <dependencies>
-        <!--storm依赖jar-->
-        <dependency>
-            <groupId>org.apache.storm</groupId>
-            <artifactId>storm-core</artifactId>
-            <version>0.10.0</version>
-        </dependency>
-        <!--处理包冲突-->
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>log4j-over-slf4j</artifactId>
-            <version>1.6.6</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-api</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-    </dependencies>
+    <packaging>jar</packaging>
 
     <build>
-        <!--指定资源路径-->
         <resources>
             <resource>
                 <directory>${project.basedir}/src/main/resources</directory>
             </resource>
         </resources>
-
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                    <fork>true</fork>
+                    <verbose>true</verbose>
+                    <encoding>UTF-8</encoding>
+                    <compilerArguments>
+                        <sourcepath>
+                            ${project.basedir}/src/main/java
+                        </sourcepath>
+                    </compilerArguments>
+                </configuration>
+            </plugin>
+
             <!--将项目中依赖的源码打包进jar包中-->
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
@@ -63,24 +57,6 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
-
-            <!--jdk编译环境配置-->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
-                    <fork>true</fork>
-                    <verbose>true</verbose>
-                    <encoding>UTF-8</encoding>
-                    <compilerArguments>
-                        <sourcepath>
-                            ${project.basedir}/src/main/java
-                        </sourcepath>
-                    </compilerArguments>
-                </configuration>
             </plugin>
         </plugins>
     </build>
