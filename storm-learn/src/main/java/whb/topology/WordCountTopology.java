@@ -62,6 +62,7 @@ public class WordCountTopology {
         builder.setSpout("spout", new RandomSpout());
         builder.setBolt("bolt", new SenqueceBolt()).localOrShuffleGrouping("spout");
         Config config = new Config();
+
         if(args != null && args.length > 0) {
             config.setNumWorkers(3);
             StormSubmitter.submitTopology(args[0], config, builder.createTopology());
@@ -71,6 +72,8 @@ public class WordCountTopology {
             Utils.sleep(5000);
             cluster.killTopology("firsttopology");
             cluster.shutdown();
+
+
         }
     }
 }
