@@ -25,7 +25,7 @@ public class WordCountTopology {
     public static class RandomSpout extends BaseRichSpout {
         private SpoutOutputCollector collector;
         private static String[] words = new String[]{"happy", "hellword", "firtStorm"};
-
+        private int count = 100;
         @Override
         public void open(Map map, TopologyContext topologyContext, SpoutOutputCollector spoutOutputCollector) {
             this.collector = spoutOutputCollector;
@@ -33,8 +33,16 @@ public class WordCountTopology {
 
         @Override
         public void nextTuple() {
-            String word = words[new Random().nextInt(words.length)];
-            collector.emit(new Values(word));
+            try {
+                if(count > 0) {
+                    String word = words[new Random().nextInt(words.length)];
+                    collector.emit(new Values(word));
+                    --count;
+                    Thread.sleep(500);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
         @Override
@@ -69,7 +77,7 @@ public class WordCountTopology {
         } else {
             LocalCluster cluster = new LocalCluster();
             cluster.submitTopology("firsttopology", config, builder.createTopology());
-            Utils.sleep(5000);
+            Utils.sleep(10000);
             cluster.killTopology("firsttopology");
             cluster.shutdown();
 
