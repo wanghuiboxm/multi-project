@@ -29,6 +29,6 @@ public class NumberUtils {
     }
 
     public static void main(String[] args) {
-        System.out.println(getNumLength(100));
+        System.out.println((int)(Long.parseLong("1492095581000") > Integer.MAX_VALUE ? (Long.parseLong("1492095581000")/1000):Long.parseLong("1492095581000")));
     }
 }
